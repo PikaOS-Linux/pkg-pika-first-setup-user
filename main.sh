@@ -3,7 +3,7 @@
 DEBIAN_FRONTEND=noninteractive
 
 # Clone Upstream
-cd ./pikainstall
+cd ./pika-first-setup-user
 
 # Get build deps
 apt-get build-dep ./ -y

@@ -1,0 +1,9 @@
+#! /bin/bash
+WHO=$(whoami)
+if && [[ $WHO == "pikaos" ]]; then
+username=$(zenity --entry --text="Enter your Username")
+password=$(zenity --password)
+echo "pikaos" | sudo -S true
+echo -e "#! /bin/bash\nuseradd -m -k -U $username\necho $username:$password | sudo chpasswd\nusermod -a -G sudo $username\nusermod -a -G adm,cdrom,sudo,render,dip,video,plugdev,input,render,lpadmin $username\nuserdel -r -f pikaos\nrm -rf /userdo.sh\nreboot" | sudo tee -a /userdo.sh
+echo "pikaos" | sudo -S su -c "/userdo.sh"
+fi
