@@ -1,10 +1,11 @@
 [Desktop Entry]
-Name=PikaOS hub
-Exec=pika-first-setup-user
-Icon=pika-logo
-StartupWMClass=pika_welcome
-Terminal=false
 Type=Application
-Terminal=false
+Name=PikaOS User Setup
+Exec=pika-first-setup-user
+Hidden=false
+NoDisplay=false
+Icon=pika-logo
+X-GNOME-Autostart-enabled=true
+X-KDE-AutostartScript=true
 Categories=GNOME;GTK;Utility;
 Keywords=Gnome;GTK
