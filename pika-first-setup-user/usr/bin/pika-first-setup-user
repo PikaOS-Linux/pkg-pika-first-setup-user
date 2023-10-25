@@ -1,8 +1,21 @@
 #! /bin/bash
 WHO=$(whoami)
 if [[ $WHO == "pikaos" ]]; then
-username=$(zenity --entry --text="Enter your Username")
-password=$(zenity --password)
+username=""
+password=""
+user_info_valid=0
+while [[ $user_info_valid == 0 ]]
+do
+	if [[ -z $username ]]
+	then
+		username=$(zenity --entry --text="Enter your Username")
+	fi
+	if [[ -z $password ]]
+	then
+		password=$(zenity --password)
+	fi
+	user_info_valid=1
+done
 echo "pikaos" | sudo -S true
 echo -e "#! /bin/bash\nuseradd -s /usr/bin/bash -m -k -U $username\necho $username:$password | sudo chpasswd\nusermod -a -G sudo $username\nmkdir -p /home/$username\ncp -rvf /etc/skel/.* /home/$username/ || true\nchown -R $username:$username /home/$username\nusermod -a -G adm,cdrom,sudo,render,dip,video,plugdev,input,render,lpadmin $username\nuserdel -r -f pikaos\nrm -rf /userdo.sh\nreboot" | sudo tee -a /userdo.sh
 echo "pikaos" | sudo -S chmod +x "/userdo.sh"
