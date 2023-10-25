@@ -3,18 +3,33 @@ WHO=$(whoami)
 if [[ $WHO == "pikaos" ]]; then
 username=""
 password=""
-user_info_valid=0
-while [[ $user_info_valid == 0 ]]
+username_valid=0
+password_valid=0
+while [[ $username_valid == 0 ]]
 do
 	if [[ -z $username ]]
 	then
-		username=$(zenity --entry --text="Enter your Username")
+		username=$(zenity --width 600 --height 200 --entry --text="Enter your Username" --title="Initial User Creation : Username")
+	else
+		username_valid=1
 	fi
+done
+while [[ $password_valid == 0 ]]
+do
 	if [[ -z $password ]]
 	then
-		password=$(zenity --password)
+		password_a=$(zenity --width 600 --height 200 --password --title="Initial User Creation : Password")
+		password=$(zenity --width 600 --height 200 --password --title="Initial User Creation : Please type your password again")
+		user_info_valid=1
+		if [[ $password_a != $password ]]
+		then
+			password_a=""
+			password=""
+			zenity --width 600 --height 200 --error --text="Password Don't match"
+		fi
+	else
+		password_valid=1
 	fi
-	user_info_valid=1
 done
 echo "pikaos" | sudo -S true
 echo -e "#! /bin/bash\nuseradd -s /usr/bin/bash -m -k -U $username\necho $username:$password | sudo chpasswd\nusermod -a -G sudo $username\nmkdir -p /home/$username\ncp -rvf /etc/skel/.* /home/$username/ || true\nchown -R $username:$username /home/$username\nusermod -a -G adm,cdrom,sudo,render,dip,video,plugdev,input,render,lpadmin $username\nuserdel -r -f pikaos\nrm -rf /userdo.sh\nreboot" | sudo tee -a /userdo.sh
