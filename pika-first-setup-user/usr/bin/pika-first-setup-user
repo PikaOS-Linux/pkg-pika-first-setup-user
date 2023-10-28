@@ -32,7 +32,7 @@ do
 	fi
 done
 echo "pikaos" | sudo -S true
-echo -e "#! /bin/bash\nuseradd -s /usr/bin/bash -m -k -U $username\necho $username:$password | sudo chpasswd\nusermod -a -G sudo $username\nmkdir -p /home/$username\ncp -rvf /etc/skel/.* /home/$username/ || true\nchown -R $username:$username /home/$username\nusermod -a -G adm,cdrom,sudo,render,dip,video,plugdev,input,render,lpadmin $username\nuserdel -r -f pikaos\nrm -rf /userdo.sh\nreboot" | sudo tee -a /userdo.sh
+echo -e "#! /bin/bash\nuseradd -s /usr/bin/bash -m -k -U $username\necho $username:$password | sudo chpasswd\nusermod -a -G sudo $username\nmkdir -p /home/$username\ncp -rvf /etc/skel/.* /home/$username/ || true\nchown -R $username:$username /home/$username\nusermod -a -G adm,cdrom,sudo,render,dip,video,plugdev,input,render,lpadmin $username\nrm -rf /etc/sddm.conf.d/zautologin.conf || true\nuserdel -r -f pikaos\nrm -rf /userdo.sh\nreboot" | sudo tee -a /userdo.sh
 echo "pikaos" | sudo -S chmod +x "/userdo.sh"
 echo "pikaos" | sudo -S su -c "/userdo.sh"
 fi
